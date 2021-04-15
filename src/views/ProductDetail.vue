@@ -1,11 +1,8 @@
 <template>
   <div id="product-detail-page" class="page">
     <div class="row">
-      <div class="image-container offset-1 col-4">
-        <img :src="product.image_url" alt="product's image">
-      </div>
-
-      <div class="detail-container offset-1 col-5">
+      <img class="image-container offset-1 col-10 offset-lg-1 col-lg-4" :src="product.image_url" alt="product's image">
+      <div class="detail-container offset-1 col-10 offset-lg-1 col-lg-5">
         <h2>{{ product.name }}</h2>
         <p>Stock: {{ product.stock }}</p>
         <p>Price: Rp. {{ product.price }}</p>
@@ -13,43 +10,38 @@
         <p class="product-detail">{{ product.detail }}</p>
       </div>
     </div>
-    <router-link :to="{ name: 'ProductEdit', params: { id: product.id } }"><button class="btn btn-success">Edit</button></router-link>
-    <button class="btn btn-danger">Delete</button>
+    <router-link :to="{ name: 'ProductEdit', params: { id: this.$route.params.id } }"><button class="btn btn-success">Edit</button></router-link>
+    <button @click="deleteProduct()" class="btn btn-danger">Delete</button>
+    <router-link :to="{ name: 'Home' }"><button class="btn btn-primary">Cancel</button></router-link>
   </div>
 </template>
 
 <script>
-import axios from '../API/axios'
-
 export default {
-  data () {
-    return {
-      product: {}
+  created () {
+    this.$store.dispatch('getOneProduct')
+  },
+
+  computed: {
+    product () {
+      return this.$store.state.productDetail
     }
   },
-  created () {
-    axios({
-      method: 'GET',
-      url: `/products/${this.$route.params.id}`,
-      headers: {
-        access_token: localStorage.access_token
-      }
-    })
-      .then(response => {
-        this.product = response.data
-      })
-      .catch(err => {
-        console.log(err.response.data.error)
-      })
+
+  methods: {
+    deleteProduct () {
+      this.$store.dispatch('deleteProduct')
+    }
   }
 }
 </script>
 
 <style scoped>
-  /* .image-container{
-    background-color:yellow;
-  } */
-
+  img {
+    object-fit: contain;
+    max-height: 300px;
+    margin-bottom: 20px;
+  }
   .product-detail {
     font-weight: bold;
   }

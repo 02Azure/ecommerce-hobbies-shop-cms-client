@@ -10,20 +10,17 @@ import Navbar from './components/Navbar'
 
 export default {
   name: 'App',
+
   components: {
     Navbar
   },
 
-  data () {
-    return {
-      products: []
+  created () {
+    if (localStorage.access_token) {
+      this.$store.commit('setLoginStatus', { status: true })
+      this.$store.commit('setUsername', { username: localStorage.username })
     }
-  },
-
-  methods: {
-
   }
-
 }
 </script>
 

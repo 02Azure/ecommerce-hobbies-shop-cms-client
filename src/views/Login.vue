@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import axios from '../API/axios'
-
 export default {
   name: 'Login',
   data () {
@@ -30,22 +28,7 @@ export default {
   },
   methods: {
     login () {
-      axios({
-        method: 'POST',
-        url: '/login',
-        data: {
-          username: this.username,
-          password: this.password
-        }
-      })
-        .then(response => {
-          localStorage.setItem('username', response.data.username)
-          localStorage.setItem('access_token', response.data.access_token)
-          this.$router.push({ name: 'Home' })
-        })
-        .catch(err => {
-          console.log(err.response.data.error)
-        })
+      this.$store.dispatch('login', { username: this.username, password: this.password })
     }
   }
 }

@@ -31,33 +31,20 @@
 </template>
 
 <script>
-import axios from '../API/axios'
-
 export default {
-  data () {
-    return {
-      products: []
-    }
-  },
   created () {
-    axios({
-      method: 'GET',
-      url: '/products',
-      headers: {
-        access_token: localStorage.access_token
-      }
-    })
-      .then(response => {
-        console.log(response.data)
-        this.products = response.data
-      })
-      .catch(err => {
-        console.log(err.response.data.error)
-      })
+    this.$store.dispatch('getAllProducts')
   },
+
   methods: {
     toProductDetail (ProductId) {
       this.$router.push({ name: 'ProductDetail', params: { id: ProductId } })
+    }
+  },
+
+  computed: {
+    products () {
+      return this.$store.state.products
     }
   }
 
