@@ -26,6 +26,8 @@
         <option value="single">Single</option>
         <option value="sealed product">Sealed Product</option>
         <option value="accessory">Accessory</option>
+        <option value="figure">Figurine/Model Kit</option>
+        <option value="other">Other</option>
       </select>
 
       <div class="form-group">

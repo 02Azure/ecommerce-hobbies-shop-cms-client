@@ -1,4 +1,5 @@
 import axios from '../API/axios'
+import toast from '../API/sweetalert-toast'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
@@ -48,10 +49,20 @@ const store = new Vuex.Store({
           localStorage.setItem('access_token', response.data.access_token)
           localStorage.setItem('username', response.data.username)
           router.push({ name: 'Home' })
+          toast.fire({
+            icon: 'success',
+            iconColor: 'deepskyblue',
+            title: `Welcome, ${response.data.username}!`,
+            background: 'azure'
+          })
         })
 
         .catch(err => {
-          console.log(err.response.data.error)
+          toast.fire({
+            icon: 'error',
+            title: err.response.data.error,
+            background: 'mistyrose'
+          })
         })
     },
 
@@ -59,6 +70,11 @@ const store = new Vuex.Store({
       context.commit('setLoginStatus', { status: false })
       context.commit('setUsername', { username: '' })
       localStorage.clear()
+
+      toast.fire({
+        icon: 'info',
+        title: 'Successfully logged out'
+      })
       router.push({ name: 'Login' })
     },
 
@@ -71,7 +87,11 @@ const store = new Vuex.Store({
           context.commit('setProducts', { products: response.data })
         })
         .catch(err => {
-          console.log(err.response.data.error)
+          toast.fire({
+            icon: 'error',
+            title: err.response.data.error,
+            background: 'mistyrose'
+          })
         })
     },
 
@@ -98,7 +118,12 @@ const store = new Vuex.Store({
 
         .catch(err => {
           router.push({ name: 'NotFound' })
-          console.log(err.response.data.error)
+          toast.fire({
+            icon: 'error',
+            title: err.response.data.error,
+            background: 'mistyrose',
+            timer: 5000
+          })
         })
     },
 
@@ -119,11 +144,28 @@ const store = new Vuex.Store({
         }
       })
         .then(response => {
+          toast.fire({
+            icon: 'success',
+            title: 'New product has been successfully added!'
+          })
           router.push({ name: 'Home' })
         })
 
         .catch(err => {
-          console.log(err.response.data.error)
+          let msg
+
+          if (Array.isArray(err.response.data.error)) {
+            msg = err.response.data.error.join('\n')
+          } else {
+            msg = err.response.data.error
+          }
+
+          toast.fire({
+            icon: 'error',
+            title: msg,
+            background: 'mistyrose',
+            timer: 5000
+          })
         })
     },
 
@@ -144,11 +186,20 @@ const store = new Vuex.Store({
         }
       })
         .then(response => {
+          toast.fire({
+            icon: 'success',
+            title: 'Changes has been successfully saved'
+          })
           router.push({ name: 'ProductDetail', params: { id: productId } })
         })
 
         .catch(err => {
-          console.log(err.response.data.error)
+          toast.fire({
+            icon: 'error',
+            title: err.response.data.error,
+            background: 'mistyrose',
+            timer: 5000
+          })
         })
     },
 
@@ -162,12 +213,19 @@ const store = new Vuex.Store({
         }
       })
         .then(response => {
-          console.log(response.data)
+          toast.fire({
+            icon: 'success',
+            title: 'Product has been successfully deleted'
+          })
           router.push({ name: 'Home' })
         })
 
         .catch(err => {
-          console.log(err.response.data.error)
+          toast.fire({
+            icon: 'error',
+            title: err.response.data.error,
+            background: 'mistyrose'
+          })
         })
     }
   }
