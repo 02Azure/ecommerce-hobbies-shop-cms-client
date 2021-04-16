@@ -193,6 +193,7 @@ const store = new Vuex.Store({
         },
         data: {
           name: payload.product.name,
+          image_url: payload.product.image_url,
           stock: payload.product.stock,
           price: payload.product.price,
           category: payload.product.category,
