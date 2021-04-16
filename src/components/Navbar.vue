@@ -1,6 +1,6 @@
 <template>
   <header>
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar fixed-top navbar-expand-lg navbar-light">
   <div class="container-fluid">
     <h1 class="navbar-brand">Lilynano Hobbies Shop</h1>
     <button v-if="isLoggedIn" class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

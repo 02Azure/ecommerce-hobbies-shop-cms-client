@@ -30,6 +30,6 @@ export default {
 }
 
 .page {
-  margin-top: 2em;
+  margin-top: 5em;
 }
 </style>

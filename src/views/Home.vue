@@ -13,33 +13,24 @@
         </tr>
       </thead>
       <tbody>
-        <tr
+        <ProductRow
           v-for="product in products"
           :key="product.id"
-          @click="toProductDetail(product.id)"
-        >
-          <th scope="row">{{ product.id }}</th>
-          <td>{{ product.name }}</td>
-          <td><img :src="product.image_url" alt="product's image"></td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.stock }}</td>
-          <td>{{ product.category }}</td>
-        </tr>
+          :product = "product"
+        />
       </tbody>
     </table>
   </div>
 </template>
 
 <script>
+import ProductRow from '../components/ProductRow'
+
 export default {
+  name: 'Home',
+  components: { ProductRow },
   created () {
     this.$store.dispatch('getAllProducts')
-  },
-
-  methods: {
-    toProductDetail (ProductId) {
-      this.$router.push({ name: 'ProductDetail', params: { id: ProductId } })
-    }
   },
 
   computed: {
@@ -47,13 +38,5 @@ export default {
       return this.$store.state.products
     }
   }
-
 }
 </script>
-
-<style scoped>
-  img {
-    height: 150px;
-  }
-
-</style>

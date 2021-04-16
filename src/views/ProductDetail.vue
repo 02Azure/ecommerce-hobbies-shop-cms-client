@@ -1,7 +1,7 @@
 <template>
   <div id="product-detail-page" class="page">
     <div class="row">
-      <img class="image-container offset-1 col-10 offset-lg-1 col-lg-4" :src="product.image_url" alt="product's image">
+      <img class="image-container offset-1 col-10 offset-lg-1 col-lg-4" :src="product.image_url" onerror="this.src = 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder.jpg'" alt="product's image">
       <div class="detail-container offset-1 col-10 offset-lg-1 col-lg-5">
         <h2>{{ product.name }}</h2>
         <p>Stock: {{ product.stock }}</p>
