@@ -4,11 +4,11 @@
     <form @submit.prevent="login">
       <div class="form-group">
         <label for="loginusername">Username</label>
-        <input v-model="username" type="text" class="form-control" id="loginusername" aria-describedby="emailHelp">
+        <input v-model="username" type="text" class="form-control" id="loginusername" required>
       </div>
       <div class="form-group">
         <label for="loginpassword">Password</label>
-        <input v-model="password" type="password" class="form-control" id="loginpassword">
+        <input v-model="password" type="password" class="form-control" id="loginpassword" required>
       </div>
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
@@ -35,10 +35,6 @@ export default {
 </script>
 
 <style scoped>
-  #login-page{
-    margin-top: 50px;
-  }
-
   h2{
     margin-bottom: 20px;
   }
@@ -53,6 +49,7 @@ export default {
   }
 
   button{
+    width: 50%;
     margin-top: 1em;
   }
 </style>

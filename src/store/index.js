@@ -44,17 +44,31 @@ const store = new Vuex.Store({
         }
       })
         .then(response => {
-          context.commit('setUsername', { username: response.data.username })
-          context.commit('setLoginStatus', { status: true })
-          localStorage.setItem('access_token', response.data.access_token)
-          localStorage.setItem('username', response.data.username)
-          router.push({ name: 'Home' })
-          toast.fire({
-            icon: 'success',
-            iconColor: 'deepskyblue',
-            title: `Welcome, ${response.data.username}!`,
-            background: 'azure'
-          })
+          if (response.data.role === 'admin') {
+            context.commit('setUsername', { username: response.data.username })
+            context.commit('setLoginStatus', { status: true })
+
+            localStorage.setItem('access_token', response.data.access_token)
+            localStorage.setItem('username', response.data.username)
+
+            router.push({ name: 'Home' })
+
+            toast.fire({
+              icon: 'success',
+              iconColor: 'deepskyblue',
+              title: `Welcome, ${response.data.username}!`,
+              background: 'azure'
+            })
+          } else {
+            const err = {
+              response: {
+                data: {
+                  error: 'Only admin can access this site'
+                }
+              }
+            }
+            throw err
+          }
         })
 
         .catch(err => {
@@ -205,27 +219,41 @@ const store = new Vuex.Store({
 
     deleteProduct (context, payload) {
       const productId = router.currentRoute.params.id
-      axios({
-        method: 'DELETE',
-        url: `/products/${productId}`,
-        headers: {
-          access_token: localStorage.access_token
-        }
+      toast.fire({
+        title: 'Are you sure?',
+        text: 'This will permanently delete this product',
+        toast: false,
+        position: 'center',
+        icon: 'warning',
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonColor: 'red',
+        confirmButtonText: 'Yes'
       })
-        .then(response => {
-          toast.fire({
-            icon: 'success',
-            title: 'Product has been successfully deleted'
-          })
-          router.push({ name: 'Home' })
-        })
-
-        .catch(err => {
-          toast.fire({
-            icon: 'error',
-            title: err.response.data.error,
-            background: 'mistyrose'
-          })
+        .then((result) => {
+          if (result.isConfirmed) {
+            axios({
+              method: 'DELETE',
+              url: `/products/${productId}`,
+              headers: {
+                access_token: localStorage.access_token
+              }
+            })
+              .then(response => {
+                toast.fire({
+                  icon: 'success',
+                  title: 'Product has been successfully deleted'
+                })
+                router.push({ name: 'Home' })
+              })
+              .catch(err => {
+                toast.fire({
+                  icon: 'error',
+                  title: err.response.data.error,
+                  background: 'mistyrose'
+                })
+              })
+          }
         })
     }
   }

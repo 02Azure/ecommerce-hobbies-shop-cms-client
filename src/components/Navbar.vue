@@ -51,6 +51,10 @@ export default {
     background-color: palegoldenrod;
   }
 
+  .nav-link:hover {
+    background-color:darkkhaki
+  }
+
   #logout-button{
     width: 120px;
     text-align:center;

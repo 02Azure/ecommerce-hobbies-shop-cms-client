@@ -31,5 +31,7 @@ export default {
 
 .page {
   margin-top: 5em;
+  padding: 2em;
+  background-color: ivory;
 }
 </style>
