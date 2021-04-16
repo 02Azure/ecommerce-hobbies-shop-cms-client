@@ -2,25 +2,25 @@
   <form @submit.prevent="confirmAction()">
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" v-model="name" required>
+      <input type="text" class="form-control" id="name" v-model="product.name" required>
     </div>
 
     <div class="form-group">
       <label for="image_url">Image URL</label>
-      <input type="url" class="form-control" id="image_url" v-model="image_url">
+      <input type="url" class="form-control" id="image_url" v-model="product.image_url">
     </div>
 
     <div class="form-group">
       <label for="stock">Stock</label>
-      <input type="number" class="form-control" id="stock" v-model="stock" min="0">
+      <input type="number" class="form-control" id="stock" v-model="product.stock" min="0">
     </div>
 
     <div class="form-group">
       <label for="price">Price</label>
-      <input type="number" class="form-control" id="price" v-model="price" min="0">
+      <input type="number" class="form-control" id="price" v-model="product.price" min="0">
     </div>
 
-    <select class="form-select form-select-lg mb-3" v-model="category">
+    <select class="form-select form-select-lg mb-3" v-model="product.category">
       <option value="single">Single</option>
       <option value="sealed product">Sealed Product</option>
       <option value="accessory">Accessory</option>
@@ -30,7 +30,7 @@
 
     <div class="form-group">
       <label for="detail">Detail</label>
-      <textarea class="form-control" id="detail" rows="3" v-model="detail"></textarea>
+      <textarea class="form-control" id="detail" rows="3" v-model="product.detail"></textarea>
     </div>
 
     <button type="submit" class="btn btn-success">Confirm</button>
@@ -42,16 +42,6 @@
 <script>
 export default {
   name: 'Form',
-  data () {
-    return {
-      name: this.product.name,
-      image_url: this.product.image_url,
-      stock: this.product.stock,
-      price: this.product.price,
-      category: this.product.category,
-      detail: this.product.detail
-    }
-  },
 
   props: ['product', 'returnTo'],
 
@@ -59,12 +49,12 @@ export default {
     confirmAction () {
       this.$emit('confirmAction', {
         product: {
-          name: this.name,
-          image_url: this.image_url,
-          stock: this.stock,
-          price: this.price,
-          category: this.category,
-          detail: this.detail
+          name: this.product.name,
+          image_url: this.product.image_url,
+          stock: this.product.stock,
+          price: this.product.price,
+          category: this.product.category,
+          detail: this.product.detail
         }
       })
     }
