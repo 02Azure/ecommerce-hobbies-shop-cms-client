@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <Navbar />
+    <div class="modal" tabindex="-1">
+    <router-view/>
+</div>
+
     <router-view/>
   </div>
 </template>

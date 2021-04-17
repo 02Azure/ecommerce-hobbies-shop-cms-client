@@ -13,7 +13,7 @@
       <button type="submit" class="btn btn-primary">Login</button>
     </form>
     <br>
-    <a href="#">Shop site</a>
+    <a href="https://lilynano-hobbies-shop-customer.firebaseapp.com/">Shop site</a>
   </div>
 </template>
 
